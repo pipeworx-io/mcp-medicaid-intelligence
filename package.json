@@ -1,0 +1,20 @@
+{
+  "name": "@pipeworx/mcp-medicaid-intelligence",
+  "version": "0.1.0",
+  "description": "Medicaid drug utilization by NDC, managed-care enrollment and state enrollment operations from CMS",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "medicaid-intelligence"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pipeworx-io/mcp-medicaid-intelligence"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
