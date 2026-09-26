@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/medicaid-intelligence",
   "title": "Medicaid Intelligence",
   "description": "MCP server for medicaid-intelligence",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "websiteUrl": "https://pipeworx.io/packs/medicaid-intelligence",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-medicaid-intelligence",
