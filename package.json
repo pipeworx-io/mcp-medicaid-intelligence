@@ -1,12 +1,20 @@
 {
   "name": "@pipeworx/mcp-medicaid-intelligence",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Investor-oriented Medicaid drug utilization, managed-care, and enrollment signals.",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./tools.json": "./tools.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-medicaid-intelligence": "bin/cli.js"
+  },
+  "files": ["bin/", "lib/", "tools.json", "server.json"],
+  "engines": {
+    "node": ">=18"
   },
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "medicaid-intelligence"],
   "license": "MIT",
@@ -14,19 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/pipeworx-io/mcp-medicaid-intelligence.git"
   },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "tsx": "^4.19.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3",
-    "@cloudflare/workers-types": "^4.20260405.1"
-  },
+  "mcpName": "io.github.pipeworx-io/medicaid-intelligence",
   "pipeworx": {
-    "sourceHash": "v1-0a94b54bdf7d9b70e9640b382af6f71e3aab6a85b3dd36efee0e4849640e7fa4",
-    "sourceCommit": "ba9dd6df5992aeb16ef2425ee86d1752c34ca636"
+    "mode": "gateway",
+    "slug": "medicaid-intelligence",
+    "gatewaySlug": "medicaid-intelligence",
+    "sourceHash": "v1-45df38121ff021d95ef28254484c3aeff789faabc93889fb13cc343c3ad79979",
+    "sourceCommit": "5c89d6abb778d45da5d92002eb251978622bedf9"
   }
 }

@@ -1,0 +1,464 @@
+[
+  {
+    "name": "medicaid_drug_utilization",
+    "description": "Quarterly state-level Medicaid utilization rows for a drug — prescriptions, units and reimbursement per state and quarter, separated into fee-for-service and managed care. Ask by NAME (\"Ozempic\") or by an exact 11-digit NDC. Reimbursement is gross before Medicaid rebates and is not manufacturer revenue or net price.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "drug": {
+          "type": "string",
+          "description": "Drug name as it appears on the package, e.g. \"Ozempic\" or \"Humira\" — matched against the Medicaid product list, aggregating every package size. A generic ingredient is expanded to its NDCs automatically when Medicaid lists it only under brands."
+        },
+        "ndc": {
+          "type": "string",
+          "description": "Exact 11-digit National Drug Code, hyphenated or not, e.g. \"00002-1433-80\". Optional — give this OR drug. An NDC narrows to one package size."
+        },
+        "year": {
+          "type": "number",
+          "description": "Calendar year 2020-2026. Defaults to the most recent year with data."
+        },
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\") — both are accepted."
+        },
+        "utilization_type": {
+          "type": "string",
+          "enum": [
+            "FFS",
+            "Managed Care"
+          ],
+          "description": "Restrict to fee-for-service or managed-care records; omit for both."
+        },
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        }
+      },
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "records",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_drug_state_market",
+    "description": "Which states spend the most on a drug — one year of Medicaid reimbursement broken down by state, keeping fee-for-service and managed care separate. Ask by NAME (\"Ozempic\") or by an exact 11-digit NDC. Suppressed rows remain unavailable and totals are gross pharmacy reimbursement before rebates.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "drug": {
+          "type": "string",
+          "description": "Drug name as it appears on the package, e.g. \"Ozempic\" or \"Humira\" — matched against the Medicaid product list, aggregating every package size. A generic ingredient is expanded to its NDCs automatically when Medicaid lists it only under brands."
+        },
+        "ndc": {
+          "type": "string",
+          "description": "Exact 11-digit National Drug Code, hyphenated or not, e.g. \"00002-1433-80\". Optional — give this OR drug. An NDC narrows to one package size."
+        },
+        "year": {
+          "type": "number",
+          "description": "Calendar year 2020-2026. Defaults to the most recent year with data."
+        }
+      },
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "states",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_drug_trend",
+    "description": "How much Medicaid spent on a drug, year by year — annual prescriptions, units and gross reimbursement from 2020 onward, split between fee-for-service and managed care. Ask by NAME (\"Ozempic\", \"Humira\"): the name is matched against the Medicaid product list and aggregated across every package size, so this answers \"how much did Medicaid spend on X\" directly. An exact 11-digit NDC narrows to one package instead. Reimbursement is GROSS, before the rebates Medicaid negotiates, so it is not manufacturer revenue or net cost to the programme. Suppressed values are never converted to zero.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "drug": {
+          "type": "string",
+          "description": "Drug name as it appears on the package, e.g. \"Ozempic\" or \"Humira\" — matched against the Medicaid product list, aggregating every package size. A generic ingredient is expanded to its NDCs automatically when Medicaid lists it only under brands."
+        },
+        "ndc": {
+          "type": "string",
+          "description": "Exact 11-digit National Drug Code, hyphenated or not, e.g. \"00002-1433-80\". Optional — give this OR drug. An NDC narrows to one package size."
+        },
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\") — both are accepted."
+        },
+        "from_year": {
+          "type": "number",
+          "description": "First calendar year, 2020 or later. Defaults to 2024 — pass an earlier year for a longer history."
+        },
+        "to_year": {
+          "type": "number",
+          "description": "Last calendar year, 2026 or earlier."
+        }
+      },
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "ndc": {
+          "type": "string",
+          "description": "Present only when the call was matched on an exact NDC."
+        },
+        "drug": {
+          "type": "string"
+        },
+        "matched_by": {
+          "type": "string",
+          "description": "ndc | product_name | ndc_expansion."
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "years": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "matched_by",
+        "years",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_managed_care_summary",
+    "description": "Show annual state Medicaid enrollment and enrollment in any or comprehensive managed care. Counts are state-reported program enrollment, not covered lives attributable to a particular insurer.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\"). Omit for national totals."
+        },
+        "from_year": {
+          "type": "number"
+        },
+        "to_year": {
+          "type": "number"
+        }
+      }
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "years": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "years",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_managed_care_program_mix",
+    "description": "Show state Medicaid enrollment by managed-care program type, including comprehensive MCO, PCCM, MLTSS, behavioral health, dental, transportation, and PACE. Program counts overlap and must not be summed.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\") — both are accepted."
+        },
+        "year": {
+          "type": "number",
+          "description": "Calendar year; omit for every year published."
+        }
+      },
+      "required": [
+        "state"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "years": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "years",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_plan_market",
+    "description": "Return a bounded API-order sample of Medicaid managed-care plan/program rows by state and optional year, with the authoritative matching-row count. Zero may represent confidentiality suppression in this source.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Full state name."
+        },
+        "year": {
+          "type": "number"
+        },
+        "parent_organization": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "state"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "plans": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "plans",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_monthly_managed_care",
+    "description": "Show monthly Medicaid/CHIP enrollment for one state and managed-care participation category. Data-quality flags and confidentiality suppression are preserved.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\") — both are accepted."
+        },
+        "participation": {
+          "type": "string",
+          "description": "Exact CMS category, e.g. \"Comprehensive managed care\"."
+        },
+        "from_month": {
+          "type": "string",
+          "description": "YYYYMM."
+        },
+        "to_month": {
+          "type": "string",
+          "description": "YYYYMM."
+        }
+      },
+      "required": [
+        "state",
+        "participation"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "months": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "months",
+        "source",
+        "interpretation"
+      ]
+    }
+  },
+  {
+    "name": "medicaid_enrollment_operations",
+    "description": "Show monthly Medicaid and CHIP enrollment and application-processing indicators for one state. Values are preliminary or updated state reports and may include footnotes or missing periods.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "US state, as a two-letter code (\"CA\") or a full name (\"California\") — both are accepted."
+        },
+        "from_month": {
+          "type": "string",
+          "description": "YYYYMM."
+        },
+        "to_month": {
+          "type": "string",
+          "description": "YYYYMM."
+        }
+      },
+      "required": [
+        "state"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
+        },
+        "returned": {
+          "type": "number"
+        },
+        "months": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "interpretation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "total",
+        "returned",
+        "months",
+        "source",
+        "interpretation"
+      ]
+    }
+  }
+]

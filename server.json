@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/medicaid-intelligence",
   "title": "Medicaid Intelligence",
   "description": "Investor-oriented Medicaid drug utilization, managed-care, and enrollment signals.",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "websiteUrl": "https://pipeworx.io/packs/medicaid-intelligence",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-medicaid-intelligence",
