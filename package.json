@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-medicaid-intelligence",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Investor-oriented Medicaid drug utilization, managed-care, and enrollment signals.",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "medicaid-intelligence",
     "gatewaySlug": "medicaid-intelligence",
-    "sourceHash": "v1-45df38121ff021d95ef28254484c3aeff789faabc93889fb13cc343c3ad79979",
-    "sourceCommit": "5c89d6abb778d45da5d92002eb251978622bedf9"
+    "sourceHash": "v1-86047902b6f62f9613503b4d16962eec4f7a8a3f58378b020c8799bd0182c136",
+    "sourceCommit": "56cf550e46fed96c0101a3877ccaf8357eecf016"
   }
 }
